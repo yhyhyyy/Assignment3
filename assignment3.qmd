@@ -15,14 +15,11 @@ library(dplyr)
 library(readr)
 library(tidytext)
 library(ggplot2)
-
 pub <- read.csv("pubmed.csv")
-
 tokens <- pub %>%
   unnest_tokens(word, abstract) %>%
   count(term, word, sort = TRUE)
 head(tokens)
-
 data("stop_words")
 tokens_cleaned <- pub %>%
   unnest_tokens(word, abstract) %>% 
@@ -48,7 +45,6 @@ print(top_words, n = 30)
 bigrams <- pub %>%
   unnest_tokens(bigram, abstract, token = "ngrams", n = 2) %>%
   count(bigram, sort = TRUE)
-
 top_bigrams <- bigrams %>% slice_max(n, n = 10)
 ggplot(top_bigrams, aes(x = reorder(bigram, n), y = n)) +
   geom_col() +
